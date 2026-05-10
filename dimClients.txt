@@ -1,0 +1,21 @@
+CustomerID,RegistrationDate,AcquisitionChannel,CAC_Cost_PLN,Gender,MarketingConsent
+K001,2023-01-15,Google Ads,150,F,Yes
+K002,2023-01-20,Organic,0,M,No
+K003,2023-02-10,Facebook,120,F,Yes
+K004,2023-02-18,Affiliate,80,M,Yes
+K005,2023-03-05,Google Ads,150,F,Yes
+K006,2023-03-22,Organic,0,F,No
+K007,2023-04-10,Facebook,120,M,Yes
+K008,2023-04-30,Affiliate,80,F,No
+K009,2023-05-12,Google Ads,150,M,Yes
+K010,2023-05-25,Organic,0,F,Yes
+K011,2023-06-05,Facebook,120,M,No
+K012,2023-06-18,Affiliate,80,F,Yes
+K013,2023-07-01,Google Ads,150,F,No
+K014,2023-07-20,Facebook,120,M,Yes
+K015,2023-08-10,Organic,0,F,Yes
+K016,2023-08-25,Google Ads,150,M,Yes
+K017,2023-09-05,Affiliate,80,F,No
+K018,2023-09-20,Facebook,120,F,Yes
+K019,2023-10-10,Organic,0,M,Yes
+K020,2023-10-25,Google Ads,150,F,No

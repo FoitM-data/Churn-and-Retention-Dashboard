@@ -1,0 +1,65 @@
+// PROJECT: churn-and-retention-dashboard
+// Author: Michal Foit
+// Note: These are the core DAX measures extracted from the Excel Data Model.
+// Formatted using DAXFormatter.com
+
+
+// --- 1. BASE AGGREGATIONS --- //
+
+Total Income =
+SUM ( factTransactions[Amount_PLN] )
+
+// Calculates the last purchase date
+Last Purchase =
+MAX ( factTransactions[PurchaseDate] )
+
+// Calculates whole customer acquisition cost
+Whole CAC =
+SUM ( dimClients[CAC_Cost_PLN] )
+
+Churn status =
+MAX ( 'When Churn status'[When Churn status] )
+
+Active Status =
+MAX ( 'When_Active_status'[When Active status] )
+
+
+// --- 2. TIME INTELLIGENCE --- //
+// Used for the main trend charts on the dashboard
+
+// Calculates average lifetime value
+AVG LTV =
+DIVIDE ( [Total Income], DISTINCTCOUNT ( factTransactions[CustomerID] ) )
+
+// Calculates days since last purchase, "today" is set as 12.31.2023 due to fit to data and reach realistic returns
+Days Since Last Purchase =
+DATEDIFF ( [Last Purchase], DATE ( 2023, 12, 31 ), DAY )
+
+
+
+// --- 3. CHURN LOGIC --- //
+
+// Grouping customers based on the "Days Since Last Purchase" gap using names and KPI's like dots
+// Note: Thresholds are dynamic
+// user is able to change them easily by replacing values in arrays for a new ones,
+// what is strongly intuitive
+
+Risk status =
+SWITCH (
+    TRUE (),
+    ISBLANK ( [Last Purchase] ), "No Purchase",
+    [Days Since Last Purchase] >= [Churn status], "Churn",
+    [Days Since Last Purchase] < [Active Status], "Active",
+    "Win-back"
+)
+
+Risk status KPI =
+VAR When_Churn_status = [Churn status]
+VAR When_Active_status_ = [Active Status]
+RETURN
+    SWITCH (
+        TRUE (),
+        [Days Since Last Purchase] < When_Active_status_, 1,
+        [Days Since Last Purchase] >= When_Churn_status, -1,
+        0
+    )
